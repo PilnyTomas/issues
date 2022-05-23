@@ -1,0 +1,38 @@
+#include "driver/i2s.h"
+#define SAMPLE_RATE 16000
+#define BUF_LEN 128
+
+void setup(){
+  Serial.begin(115200);
+  delay(250);
+  // put your setup code here, to run once:
+static const i2s_port_t i2s_num = I2S_NUM_0; // i2s port number
+
+  static const i2s_config_t i2s_config = {
+    .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX
+              //| I2S_MODE_DAC_BUILT_IN
+            ),
+    .sample_rate = SAMPLE_RATE,
+    .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,  // only the top 8 bits will actually be used by the internal DAC, but using 8 bits stra>
+    .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,  // always use stereo output. mono seems to be buggy, and the overhead is insignifcant o>
+    .communication_format = (i2s_comm_format_t)(I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_LSB),  // this appears to be the correct setting>
+    .intr_alloc_flags = 0, // default interrupt priority
+    .dma_buf_count = 4,    // 8*128 bytes of buffer corresponds to 256 samples (2 channels, see above, 2 bytes per sample per channel)
+    .dma_buf_len = BUF_LEN,
+    .use_apll = false
+  };
+
+  esp_err_t ret = i2s_driver_install(i2s_num, &i2s_config, 0, NULL);   //install and start i2s driver
+  Serial.printf("i2s driver install returned = %d\n", ret);
+
+
+  //i2s_adc_disable(i2s_num);  //Tried this, did not helped.
+
+  //So far i've only tested this issue on following three pins:
+  Serial.printf("analogRead(2) = %d\n", analogRead(2)); //always returns 4095 no matter what signal on pin
+  Serial.printf("analogRead(4) = %d\n", analogRead(4)); //always returns 4095 no matter what signal on pin
+  Serial.printf("analogRead(35) = %d\n", analogRead(35)); //returns correct value measured by ADC on pin 35
+}
+
+void loop() {
+}

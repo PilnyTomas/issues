@@ -1,0 +1,133 @@
+/*
+  connect pins 33 (PWM output) and 32 (I2S input: ADC UNIT 1, CHANNEL 4)
+  If you want to use any other signal ipnput comment the line "#define _USE_PWM" and connect your input to pin 32
+*/
+
+#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
+#include "esp_log.h"
+#include "esp_err.h"
+#include <driver/i2s.h>
+#define I2S_SAMPLE_RATE 20000
+#define ADC_INPUT ADC1_CHANNEL_4 //pin 32
+static const char* TAG = "I2S ADC issue";
+
+#define _USE_PWM
+
+#ifdef _USE_PWM
+  void init_pwm();
+#endif
+
+void app_main(void){
+  i2s_config_t i2s_config = {
+  .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX | I2S_MODE_ADC_BUILT_IN),
+  .sample_rate = I2S_SAMPLE_RATE,
+  .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+  .channel_format = I2S_CHANNEL_FMT_ONLY_RIGHT,
+  .communication_format = I2S_COMM_FORMAT_STAND_I2S,
+  .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
+  .dma_buf_count = 4,
+  .dma_buf_len = 32,
+  .use_apll = false,
+  .tx_desc_auto_clear = false,
+  .fixed_mclk = 0
+  };
+
+  int raw_out;
+
+/*
+  ESP_LOGD(TAG, "BEFORE I2S INSTALL");
+  if(ESP_OK != adc2_get_raw(ADC2_CHANNEL_9, ADC_WIDTH_BIT_12, &raw_out)){ // pin 26
+    ESP_LOGE(TAG, "adc2_get_raw failed");
+  }else{
+    ESP_LOGD(TAG, "pin 26 ADC2_CH9 adc2_get_raw() = %d", raw_out);
+  }
+*/
+
+  #ifdef _USE_PWM
+    init_pwm();
+  #endif
+
+
+  if(ESP_OK != i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL)){
+    ESP_LOGE(TAG, "i2s driver not installed");
+    while(1);
+  }
+  if(ESP_OK != i2s_set_adc_mode(ADC_UNIT_1, ADC_INPUT)){
+    ESP_LOGE(TAG, "i2s set adc mode failed");
+    while(1);
+  }
+  if(ESP_OK != i2s_adc_enable(I2S_NUM_0)){
+    ESP_LOGE(TAG, "i2s adc enable failed");
+    while(1);
+  }
+  ESP_LOGD(TAG, "I2S INSTALL OK");
+
+
+  uint16_t buffer[64];
+  size_t bytes_read;
+  while(true){
+    if(ESP_OK != i2s_read(I2S_NUM_0, &buffer, sizeof(buffer), &bytes_read, 15)){
+      ESP_LOGE(TAG, "i2s i2s_read failed");
+      while(1);
+    }
+    vTaskDelay(10); // satisfy watchdog
+
+    ESP_LOGD(TAG, "i2s_read %d bytes", bytes_read);
+    for(int i = 0; i < bytes_read/sizeof(uint16_t); i ++){
+      ESP_LOGD(TAG, "[%d]=%d", i, buffer[i]&0xFFF);
+    }
+    if(ESP_OK == adc2_get_raw(ADC2_CHANNEL_9, ADC_WIDTH_BIT_12, &raw_out)){
+      ESP_LOGD(TAG, "-------------------------------------");
+      ESP_LOGD(TAG, "pin 26 ADC2_CH9 adc2_get_raw() = %d", raw_out);
+      ESP_LOGD(TAG, "-------------------------------------");
+    }else{
+      ESP_LOGE(TAG, "adc2_get_raw failed");
+    }
+
+  } // infinite loop
+}
+
+
+
+#ifdef _USE_PWM
+
+  #include "driver/ledc.h"
+
+  #define LEDC_TIMER              LEDC_TIMER_0
+  #define LEDC_MODE               LEDC_LOW_SPEED_MODE
+  #define LEDC_OUTPUT_IO          (33) // Define the output GPIO
+  #define LEDC_CHANNEL            LEDC_CHANNEL_0
+  #define LEDC_DUTY_RES           LEDC_TIMER_13_BIT // Set duty resolution to 13 bits
+  #define LEDC_DUTY               (4095) // Set duty to 50%. ((2 ** 13) - 1) * 50% = 4095
+  #define LEDC_FREQUENCY          (5000) // Frequency in Hertz. Set frequency at 5 kHz
+
+  void init_pwm(){
+   // Prepare and then apply the LEDC PWM timer configuration
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_MODE,
+        .timer_num        = LEDC_TIMER,
+        .duty_resolution  = LEDC_DUTY_RES,
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 5 kHz
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
+
+    // Prepare and then apply the LEDC PWM channel configuration
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_CHANNEL,
+        .timer_sel      = LEDC_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+    ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
+
+    // Set duty to 50%
+    ESP_ERROR_CHECK(ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, LEDC_DUTY));
+
+    // Update duty to apply the new value
+    ESP_ERROR_CHECK(ledc_update_duty(LEDC_MODE, LEDC_CHANNEL));
+  }
+#endif
