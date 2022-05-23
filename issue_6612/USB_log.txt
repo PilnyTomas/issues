@@ -1,0 +1,39 @@
+// After flashing - there is no output
+// After pressing RESET button on board the port changes from /dev/ttyACM0 to /dev/ttyACM1
+// - manual swithcing in Arduino IDE needed - first logs with "Starting" are missing
+
+[ 10252][D][issue_6612.ino:23] setup(): log: Attempting to connect to SSID: Viks
+[ 10263][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 0 - WIFI_READY
+[ 10344][V][WiFiGeneric.cpp:329] _arduino_event_cb(): STA Started
+[ 10345][V][WiFiGeneric.cpp:97] set_esp_interface_ip(): Configuring Station static IP: 0.0.0.0, MASK: 0.0.0.0, GW: 0.0.0.0
+[ 10345][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 2 - STA_START
+[ 10415][V][WiFiGeneric.cpp:344] _arduino_event_cb(): STA Connected: SSID: Viks, BSSID: 04:42:1a:be:c1:60, Channel: 1, Auth: WPA2_PSK
+[ 10416][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 4 - STA_CONNECTED
+[ 10458][V][WiFiGeneric.cpp:358] _arduino_event_cb(): STA Got New IP:192.168.31.87
+[ 10458][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 7 - STA_GOT_IP
+[ 10461][D][WiFiGeneric.cpp:982] _eventCallback(): STA IP: 192.168.31.87, MASK: 255.255.255.0, GW: 192.168.31.1
+[ 11363][V][ssl_client.cpp:62] start_ssl_client(): Free internal heap before TLS 291372
+[ 11364][V][ssl_client.cpp:68] start_ssl_client(): Starting socket
+[ 11601][V][ssl_client.cpp:144] start_ssl_client(): Seeding the random number generator
+[ 11603][V][ssl_client.cpp:153] start_ssl_client(): Setting up the SSL/TLS structure...
+[ 11606][D][ssl_client.cpp:174] start_ssl_client(): WARNING: Skipping SSL Verification. INSECURE!
+[ 11614][V][ssl_client.cpp:252] start_ssl_client(): Setting hostname for TLS session...
+[ 11622][V][ssl_client.cpp:267] start_ssl_client(): Performing the SSL/TLS handshake...
+[ 12740][V][ssl_client.cpp:288] start_ssl_client(): Verifying peer X.509 certificate...
+[ 12740][V][ssl_client.cpp:296] start_ssl_client(): Certificate verified.
+[ 12743][V][ssl_client.cpp:311] start_ssl_client(): Free internal heap after TLS 248348
+[ 12761][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 46 bytes...
+[ 12762][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12768][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 23 bytes...
+[ 12776][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12784][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 17 bytes...
+[ 12791][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12799][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 13155][V][ssl_client.cpp:319] stop_ssl_socket(): Cleaning SSL connection.
+[ 13158][V][ssl_client.cpp:319] stop_ssl_socket(): Cleaning SSL connection.
+[ 13175][D][issue_6612.ino:65] setup(): log: Entering light sleep
+[113185][D][issue_6612.ino:70] setup(): log: Leaving light sleep and entering deep sleep
+
+// Serial monitor goes gray
+// No option in Port
+// After the 10s sleep the port changes back from /dev/ttyACM1 to /dev/ttyACM0

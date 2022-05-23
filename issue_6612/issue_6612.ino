@@ -1,7 +1,7 @@
 #include <WiFiClientSecure.h>
 
-const char* ssid     = "foo";     // your network SSID (name of wifi network)
-const char* password = "bar"; // your network password
+const char* ssid     = "Viks";     // your network SSID (name of wifi network)
+const char* password = "Mordornumber1"; // your network password
 
 const char*  server = "www.howsmyssl.com";  // Server URL
 
@@ -62,12 +62,12 @@ void setup() {
     client.stop();
 
     Serial.println("Serial: Entering light sleep");
-    log_d("log: Entering light  sleep");
+    log_d("log: Entering light sleep");
 
     esp_light_sleep_start();
 
-    Serial.println("Serial: Leaving light and entering deep sleep");
-    log_d("log: Leaving light and entering deep sleep");
+    Serial.println("Serial: Leaving light sleep and entering deep sleep");
+    log_d("log: Leaving light sleep and entering deep sleep");
 
     esp_deep_sleep_start();
 

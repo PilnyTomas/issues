@@ -1,0 +1,56 @@
+Attempting to connect to SSID: foo
+[ 10252][D][issue_6612.ino:23] setup(): log: Attempting to connect to SSID: foo
+[ 10262][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 0 - WIFI_READY
+[ 10343][V][WiFiGeneric.cpp:329] _arduino_event_cb(): STA Started
+[ 10344][V][WiFiGeneric.cpp:97] set_esp_interface_ip(): Configuring Station static IP: 0.0.0.0, MASK: 0.0.0.0, GW: 0.0.0.0
+[ 10344][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 2 - STA_START
+.[ 10411][V][WiFiGeneric.cpp:344] _arduino_event_cb(): STA Connected: SSID: foo, BSSID: 04:42:1a:77:17:78, Channel: 1, Auth: WPA2_PSK
+[ 10412][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 4 - STA_CONNECTED
+[ 10433][V][WiFiGeneric.cpp:358] _arduino_event_cb(): STA Got New IP:192.168.31.87
+[ 10433][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 7 - STA_GOT_IP
+[ 10436][D][WiFiGeneric.cpp:982] _eventCallback(): STA IP: 192.168.31.87, MASK: 255.255.255.0, GW: 192.168.31.1
+Connected to foo
+
+Starting connection to server...
+[ 11362][V][ssl_client.cpp:62] start_ssl_client(): Free internal heap before TLS 291372
+[ 11363][V][ssl_client.cpp:68] start_ssl_client(): Starting socket
+[ 11638][V][ssl_client.cpp:144] start_ssl_client(): Seeding the random number generator
+[ 11639][V][ssl_client.cpp:153] start_ssl_client(): Setting up the SSL/TLS structure...
+[ 11642][D][ssl_client.cpp:174] start_ssl_client(): WARNING: Skipping SSL Verification. INSECURE!
+[ 11651][V][ssl_client.cpp:252] start_ssl_client(): Setting hostname for TLS session...
+[ 11658][V][ssl_client.cpp:267] start_ssl_client(): Performing the SSL/TLS handshake...
+[ 12562][V][ssl_client.cpp:288] start_ssl_client(): Verifying peer X.509 certificate...
+[ 12562][V][ssl_client.cpp:296] start_ssl_client(): Certificate verified.
+[ 12565][V][ssl_client.cpp:311] start_ssl_client(): Free internal heap after TLS 248336
+Connected to server!
+[ 12583][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 46 bytes...
+[ 12584][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12591][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 23 bytes...
+[ 12598][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12606][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 17 bytes...
+[ 12614][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+[ 12621][V][ssl_client.cpp:364] send_ssl_data(): Writing HTTP request with 2 bytes...
+headers received
+{"given_cipher_suites":["TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384","TLS_DHE_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDHE_ECDSA_WITH_AES_256_CCM","TLS_DHE_RSA_WITH_AES_256_CCM","TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384","TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384","TLS_DHE_RSA_WITH_AES_256_CBC_SHA256","TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA","TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA","TLS_DHE_RSA_WITH_AES_256_CBC_SHA","TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8","TLS_DHE_RSA_WITH_AES_256_CCM_8","TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256","TLS_DHE_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDHE_ECDSA_WITH_AES_128_CCM","TLS_DHE_RSA_WITH_AES_128_CCM","TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256","TLS_DHE_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA","TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA","TLS_DHE_RSA_WITH_AES_128_CBC_SHA","TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8","TLS_DHE_RSA_WITH_AES_128_CCM_8","TLS_RSA_WITH_AES_256_GCM_SHA384","TLS_RSA_WITH_AES_256_CCM","TLS_RSA_WITH_AES_256_CBC_SHA256","TLS_RSA_WITH_AES_256_CBC_SHA","TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384","TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384","TLS_ECDH_RSA_WITH_AES_256_CBC_SHA","TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384","TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384","TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA","TLS_RSA_WITH_AES_256_CCM_8","TLS_RSA_WITH_AES_128_GCM_SHA256","TLS_RSA_WITH_AES_128_CCM","TLS_RSA_WITH_AES_128_CBC_SHA256","TLS_RSA_WITH_AES_128_CBC_SHA","TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256","TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256","TLS_ECDH_RSA_WITH_AES_128_CBC_SHA","TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256","TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256","TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA","TLS_RSA_WITH_AES_128_CCM_8","TLS_EMPTY_RENEGOTIATION_INFO_SCSV"],"ephemeral_keys_supported":true,"session_ticket_supported":true,"tls_compression_supported":false,"unknown_cipher_suite_supported":false,"beast_vuln":false,"able_to_detect_n_minus_one_splitting":false,"insecure_cipher_suites":{},"tls_version":"TLS 1.2","rating":"Probably Okay"}[ 12949][V][ssl_client.cpp:319] stop_ssl_socket(): Cleaning SSL connection.
+⸮[ 12952][V][ssl_client.cpp:319] stop_ssl_socket(): Cleaning SSL connection.
+Serial: Entering light sleep
+[ 12968][D][issue_6612.ino:65] setup(): log: Entering light sleep
+Serial: Leaving light sleep and entering deep sleep
+[112979][D][issue_6612.ino:70] setup(): log: Leaving light sleep and entering deep sleep
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x5 (DSLEEP),boot:0x18 (SPI_FAST_FLASH_BOOT)
+pro cpu reset by JTAG
+SPIWP:0xee
+Octal Flash Mode Enabled
+For OPI Flash, Use Default Flash Boot Mode
+mode:SLOW_RD, clock div:1
+load:0x3fcd0108,len:0x39c
+load:0x403b6000,len:0x9a4
+load:0x403ba000,len:0x288c
+entry 0x403b61c0
+Serial: Starting
+[    68][D][issue_6612.ino:16] setup(): log: Starting
+Attempting to connect to SSID: foo
+
+...
