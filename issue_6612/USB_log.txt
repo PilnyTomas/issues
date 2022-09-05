@@ -2,7 +2,7 @@
 // After pressing RESET button on board the port changes from /dev/ttyACM0 to /dev/ttyACM1
 // - manual swithcing in Arduino IDE needed - first logs with "Starting" are missing
 
-[ 10252][D][issue_6612.ino:23] setup(): log: Attempting to connect to SSID: Viks
+[ 10252][D][issue_6612.ino:23] setup(): log: Attempting to connect to SSID: foo
 [ 10263][D][WiFiGeneric.cpp:920] _eventCallback(): Arduino Event: 0 - WIFI_READY
 [ 10344][V][WiFiGeneric.cpp:329] _arduino_event_cb(): STA Started
 [ 10345][V][WiFiGeneric.cpp:97] set_esp_interface_ip(): Configuring Station static IP: 0.0.0.0, MASK: 0.0.0.0, GW: 0.0.0.0
